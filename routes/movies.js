@@ -1,3 +1,4 @@
+const validateObjectId = require('../middleware/validateObjectId');
 const {Movie, validate} = require('../models/movie'); 
 const {Genre} = require('../models/genre');
 const mongoose = require('mongoose');
@@ -61,7 +62,7 @@ router.delete('/:id', async (req, res) => {
   res.send(movie);
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', validateObjectId, async (req, res) => {
   const movie = await Movie.findById(req.params.id);
 
   if (!movie) return res.status(404).send('The movie with the given ID was not found.');

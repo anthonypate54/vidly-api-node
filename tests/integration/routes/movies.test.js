@@ -129,7 +129,6 @@ describe('/api/movies', () => {
       title = '123';
       await execGenre();
       const res = await exec();
-      console.log(res);
       expect(res.status).toBe(400);
     });
 
@@ -138,7 +137,6 @@ describe('/api/movies', () => {
       numberInStock = 0;
       await execGenre();
       const res = await exec();
-      console.log(res);
       expect(res.status).toBe(400);
     });
     it('should return 400 if dailyRentalRate is less than 1  ', async () => {
@@ -147,7 +145,6 @@ describe('/api/movies', () => {
       dailyRentalRate = 1;
       await execGenre();
       const res = await exec();
-      console.log(res);
       expect(res.status).toBe(400);
     });  
   });

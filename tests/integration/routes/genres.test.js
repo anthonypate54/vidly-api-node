@@ -114,8 +114,7 @@ describe('/api/genres', () => {
       expect(res.body).toHaveProperty('name', 'genre1');
     });
   });
-});
-/*
+
   describe('PUT /:id', () => {
     let token; 
     let newName; 
@@ -266,4 +265,3 @@ describe('/api/genres', () => {
     });
   });  
 });
-*/

@@ -89,96 +89,67 @@ describe('/api/movies', () => {
 
       expect(res.status).toBe(404);
     });
-  }); 
- /*
+  });
+
   describe('POST /', () => {
-
-    // Define the happy path, and then in each test, we change 
-    // one parameter that clearly aligns with the name of the 
-    // test. 
-    let token;     
-    let genre;
-    let aMovie;    
-    let movieObj;
-    let m_title;
-    let m_numberInStock;
-    let m_dailyRentalRate;
-    // create a genre
-
-    const createGenre = async () => {
-        genre = new Genre({ name: 'genre1' });
-        await genre.save(); 
-        let res = await request(server).get('/api/genres');
-        expect(res.status).toBe(200);
-    }
-
-    aMovie = {
-        title: m_title,
-        genre: genre,
-        numberInStock: m_numberInStock,
-        dailyRentalRate: m_dailyRentalRate 
-    };
+    let token;
+    let title = 'Movie1';
+    let id;
+    let numberInStock = 1;
+    let dailyRentalRate = 10;
 
     const exec = async () => {
-       return await request(server)
+      return await request(server)
         .post('/api/movies')
- //       .auth('anthonypate@gmail,com', '4everA1p')
         .set('x-auth-token', token)
-        .send(aMovie);
+        .send({ 
+          title, 
+          genreId: id, 
+          numberInStock, 
+          dailyRentalRate 
+        });
     }
-     beforeEach(async () => {
-        token = new User().generateAuthToken();
-     })
-     afterEach(async () => { 
-        await Genre.remove({});
-        await Movie.remove({});
-    });
+    const execGenre = async () => {
+      genre = new Genre({ name: 'genre1' });
+      await genre.save();
+      id = genre._id;
+    }
 
-    it('should return 401 if client is not logged in', async () => {
-        token = ''; 
-        m_title = 'Movie1';
-        m_numberInStock = 5;
-        m_dailyRentalRate = 10;
+    beforeEach(() => {
+      token = new User().generateAuthToken();      
+    })
 
-        const genreRes = await createGenre();
-        const res = await exec();
-        console.log(res.message);
-        expect(res.status).toBe(401);
-    });
-  });
-    
-    it('should return 400 if genre is less than 5 characters', async () => {
-      name = '1234'; 
-      
+    it('should return a vaild movie object ', async () => {
+      await execGenre();
       const res = await exec();
+      expect(res.status).toBe(200);
+    });
 
+    it('should return 400 if title is less than 5 characters  ', async () => {
+      title = '123';
+      await execGenre();
+      const res = await exec();
+      console.log(res);
       expect(res.status).toBe(400);
     });
 
-    it('should return 400 if genre is more than 50 characters', async () => {
-      name = new Array(52).join('a');
-
+    it('should return 400 if numberInStock is less than 1  ', async () => {
+      title = 'Movie1';
+      numberInStock = 0;
+      await execGenre();
       const res = await exec();
-
+      console.log(res);
       expect(res.status).toBe(400);
     });
-
-    it('should save the genre if it is valid', async () => {
-      await exec();
-
-      const genre = await Genre.find({ name: 'genre1' });
-
-      expect(genre).not.toBeNull();
-    });
-
-    it('should return the genre if it is valid', async () => {
+    it('should return 400 if dailyRentalRate is less than 1  ', async () => {
+      title = 'Movie1';
+      numberInStock = 3;
+      dailyRentalRate = 1;
+      await execGenre();
       const res = await exec();
-
-      expect(res.body).toHaveProperty('_id');
-      expect(res.body).toHaveProperty('name', 'genre1');
-    });
-
+      console.log(res);
+      expect(res.status).toBe(400);
+    });  
   });
-*/
 }); 
 

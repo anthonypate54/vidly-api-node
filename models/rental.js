@@ -63,6 +63,13 @@ rentalSchema.statics.lookup = function(customerId, movieId) {
   });
 }
 
+rentalSchema.methods.return = function () {
+  this.dateReturned = new Date();
+  
+  const rentalDays = moment().diff(this.dateOut, 'days');
+  this.rentalFee = rentalDays * this.movie.dailyRentalRate; 
+}
+
 const Rental = mongoose.model('Rental', rentalSchema);
 
 function validateRental(rental) {

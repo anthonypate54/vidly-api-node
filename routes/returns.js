@@ -17,7 +17,7 @@ router.post('/', [auth, validate(validateReturn)], async (req, res) => {
     if(rental.dateReturned) 
         return res.status(400).send('Return already processed'); 
     
-    rental.return();
+    await rental.return();
     await rental.save();
 
     await Movie.update({ _id: rental.movie._id }, {

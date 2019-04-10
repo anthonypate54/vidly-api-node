@@ -20,10 +20,8 @@ require("./startup/validation")();
 require("./startup/prod")(app);
 
 const port = process.env.PORT || config.get("port");
-winston.info("made it before");
 const server = app.listen(port, () =>
   winston.info(`Listening on port ${port}...`)
 );
-winston.info("made it after");
 
 module.exports = server;

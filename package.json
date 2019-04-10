@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watchAll --verbose --runInBand",
-    "start": "node index.js",
-    "build": "node index.js"
+    "start": "node index.js"
   },
   "engines": {
     "node": "10.15.3",

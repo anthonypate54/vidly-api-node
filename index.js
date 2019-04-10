@@ -20,6 +20,7 @@ require("./startup/validation")();
 require("./startup/prod")(app);
 
 const port = process.env.PORT || config.get("port");
+winston.info("made it here");
 const server = app.listen(port, () =>
   winston.info(`We are Listening on port ${process.env.PORT}...`)
 );
